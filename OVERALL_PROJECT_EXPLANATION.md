@@ -36,6 +36,10 @@ One of the most advanced features implemented is the Emergency Access System:
 *   **Smart Doctor Overlap**: If a *verified, logged-in Doctor* scans that exact same emergency QR code from their portal, the system recognizes their authority. It displays the critical emergency card at the top, but *also* securely fetches and renders the patient's complete medical history timeline beneath it.
 
 ## 6. Premium UI & UX Design
+![Landing Hero](screenshots/landing_hero.png)
+![Landing Process](screenshots/landing_process.png)
+![Login Screen](screenshots/login_screen.png)
+
 The entire platform has undergone a comprehensive UI/UX overhaul:
 *   **Responsive Design**: Pixel-perfect layouts that adapt flawlessly to mobile phones, tablets, and desktop monitors. Mobile layouts automatically stack components (like the hero section and scanners) for vertical scrolling.
 *   **Glassmorphism & Gradients**: The platform uses a modern, dark-mode aesthetic with vibrant cyan (`#00e5ff`) and violet accents, soft glowing shadows, and translucent glassmorphism panels.
