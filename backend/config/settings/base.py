@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'apps.records',
     'apps.emergency',
     'apps.audit',
+    'apps.labs',
 ]
 
 MIDDLEWARE = [

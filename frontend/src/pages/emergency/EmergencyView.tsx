@@ -17,7 +17,7 @@ const badgeStyle: CSSProperties = { display: 'inline-block', background: 'rgba(2
 const fieldRow: CSSProperties = { display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--border-light)', fontSize: '14px' };
 const labelStyle: CSSProperties = { color: 'var(--text-muted)', fontWeight: 500 };
 const tagStyle: CSSProperties = { display: 'inline-block', background: 'rgba(0,229,255,0.1)', color: 'var(--primary)', borderRadius: '6px', padding: '3px 8px', fontSize: '12px', margin: '2px 4px 2px 0' };
-const timelineItem: CSSProperties = { position: 'relative', paddingLeft: '24px', paddingBottom: '20px', borderLeft: '2px dashed rgba(255,255,255,0.1)' };
+const timelineItem: CSSProperties = { position: 'relative', paddingLeft: '24px', paddingBottom: '20px', borderLeft: '2px dashed var(--border-light)' };
 const timelineDot: CSSProperties = { position: 'absolute', left: '-7px', top: '2px', width: '12px', height: '12px', borderRadius: '50%', background: 'var(--primary)', border: '2px solid rgba(10,16,30,1)' };
 const sectionTitle: CSSProperties = { fontSize: '18px', fontWeight: 700, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-heading)' };
 
@@ -117,7 +117,7 @@ export const EmergencyView = () => {
                         <div style={{ fontSize: '12px', color: 'var(--primary)', marginBottom: '4px', fontWeight: 600 }}>
                           {new Date(r.record_date).toLocaleDateString()}
                         </div>
-                        <div style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '12px', padding: '16px' }}>
+                        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: '12px', padding: '16px' }}>
                           <div style={{ fontWeight: 700, fontSize: '16px', marginBottom: '8px' }}>{r.diagnosis}</div>
                           {r.prescription && <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '4px' }}>💊 {r.prescription}</div>}
                           {r.notes && <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '8px' }}>📝 {r.notes}</div>}

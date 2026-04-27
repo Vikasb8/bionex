@@ -16,10 +16,10 @@ import type { FamilyProfile, MedicalRecord, EmergencyData } from '../../types';
 
 const dashGrid: CSSProperties = { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', padding: '32px', maxWidth: '1200px', margin: '0 auto' };
 const sectionTitle: CSSProperties = { fontSize: '18px', fontWeight: 700, marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--text-heading)' };
-const healthIdBadge: CSSProperties = { display: 'inline-block', background: 'linear-gradient(135deg, rgba(0,229,255,0.1), rgba(124,58,237,0.1))', border: '1px solid rgba(0,229,255,0.2)', borderRadius: '12px', padding: '10px 20px', fontSize: '20px', fontWeight: 800, fontFamily: 'monospace', color: 'var(--primary)', letterSpacing: '3px', boxShadow: '0 4px 20px -5px rgba(0,229,255,0.15)' };
-const tagStyle: CSSProperties = { display: 'inline-block', background: 'rgba(0,229,255,0.08)', color: 'var(--primary)', borderRadius: '8px', padding: '6px 12px', fontSize: '12px', fontWeight: 600, margin: '4px 6px 4px 0', border: '1px solid rgba(0,229,255,0.15)' };
-const timelineItem: CSSProperties = { position: 'relative', paddingLeft: '28px', paddingBottom: '24px', borderLeft: '2px dashed rgba(255,255,255,0.1)' };
-const timelineDot: CSSProperties = { position: 'absolute', left: '-8px', top: '2px', width: '14px', height: '14px', borderRadius: '50%', background: 'var(--primary)', border: '2px solid rgba(10,16,30,1)', boxShadow: '0 0 10px var(--primary)' };
+const healthIdBadge: CSSProperties = { display: 'inline-block', background: 'color-mix(in srgb, var(--primary) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--primary) 20%, transparent)', borderRadius: '12px', padding: '10px 20px', fontSize: '20px', fontWeight: 800, fontFamily: 'monospace', color: 'var(--primary)', letterSpacing: '3px', boxShadow: '0 4px 20px -5px var(--primary-glow)' };
+const tagStyle: CSSProperties = { display: 'inline-block', background: 'color-mix(in srgb, var(--primary) 8%, transparent)', color: 'var(--primary)', borderRadius: '8px', padding: '6px 12px', fontSize: '12px', fontWeight: 600, margin: '4px 6px 4px 0', border: '1px solid color-mix(in srgb, var(--primary) 15%, transparent)' };
+const timelineItem: CSSProperties = { position: 'relative', paddingLeft: '28px', paddingBottom: '24px', borderLeft: '2px dashed var(--border-light)' };
+const timelineDot: CSSProperties = { position: 'absolute', left: '-8px', top: '2px', width: '14px', height: '14px', borderRadius: '50%', background: 'var(--primary)', border: '2px solid var(--bg-main)', boxShadow: '0 0 10px var(--primary-glow)' };
 
 export const PatientDashboard = () => {
   const { user } = useAuthStore();
@@ -74,7 +74,7 @@ export const PatientDashboard = () => {
       <div style={{ position: 'relative', zIndex: 10, padding: '60px 32px 0', maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
           <div style={{ fontSize: '12px', fontWeight: 700, color: 'var(--primary)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '8px' }}>Patient Portal</div>
-          <h1 style={{ fontSize: 'clamp(28px, 4vw, 36px)', marginBottom: '8px', fontWeight: 800, color: '#ffffff', zIndex: 10, position: 'relative' }}>Welcome back, <span style={{ color: 'var(--primary)' }}>{user?.name || 'Patient'}</span> 👋</h1>
+          <h1 style={{ fontSize: 'clamp(28px, 4vw, 36px)', marginBottom: '8px', fontWeight: 800, color: 'var(--text-heading)', zIndex: 10, position: 'relative' }}>Welcome back, <span style={{ color: 'var(--primary)' }}>{user?.name || 'Patient'}</span> 👋</h1>
         </motion.div>
       </div>
       <div style={dashGrid}>
@@ -93,7 +93,7 @@ export const PatientDashboard = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
           <Card hoverable style={{ height: '100%' }}>
             <div style={sectionTitle}>🚨 Emergency Protocol</div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', background: 'rgba(0,0,0,0.2)', padding: '12px 16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', background: 'var(--bg-card)', padding: '12px 16px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
               <span style={{ fontSize: '14px', color: 'var(--text-muted)', fontWeight: 600 }}>Status:</span>
               <AnimatePresence mode="wait">
                 {emergency?.is_emergency_mode_enabled ? <motion.span key="a" initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ color: '#ef4444', fontWeight: 700, fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}><div style={{width:'8px',height:'8px',borderRadius:'50%',background:'#ef4444',boxShadow:'0 0 10px #ef4444'}}/> ACTIVE</motion.span>
@@ -111,8 +111,8 @@ export const PatientDashboard = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
           <Card hoverable style={{ height: '100%' }}>
             <div style={{ ...sectionTitle, justifyContent: 'space-between' }}><span>👨‍👩‍👧‍👦 Dependents</span><Button variant="ghost" size="sm" onClick={() => setShowAddFamily(true)}>+ Add</Button></div>
-            {family.length === 0 ? <p style={{ fontSize: '14px', color: 'var(--text-muted)', background: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>No family members linked.</p> : family.map(m => (
-              <motion.div key={m.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.03)', borderRadius: '12px', padding: '14px 16px', marginBottom: '10px' }} whileHover={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.1)' }}>
+            {family.length === 0 ? <p style={{ fontSize: '14px', color: 'var(--text-muted)', background: 'var(--bg-card)', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>No family members linked.</p> : family.map(m => (
+              <motion.div key={m.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: '12px', padding: '14px 16px', marginBottom: '10px' }} whileHover={{ borderColor: 'var(--border-focus)' }}>
                 <div><div style={{ fontWeight: 600, fontSize: '15px', color: 'var(--text-heading)' }}>{m.member_name}</div><div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}><span style={{ color: 'var(--primary)' }}>{m.relation}</span> • {m.unique_health_id}</div></div>
                 <Button variant="ghost" size="sm" onClick={() => handleRemoveFamily(m.id)} style={{ color: '#ef4444', background: 'rgba(239,68,68,0.1)' }}>✕</Button>
               </motion.div>
@@ -123,13 +123,13 @@ export const PatientDashboard = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} style={{ gridColumn: '1 / -1' }}>
           <Card>
             <div style={sectionTitle}>📋 Medical History</div>
-            {records.length === 0 ? <p style={{ fontSize: '14px', color: 'var(--text-muted)', background: 'rgba(0,0,0,0.2)', padding: '32px', borderRadius: '12px', textAlign: 'center' }}>Your timeline is pristine. Records appear when a verified doctor adds them.</p> : (
+            {records.length === 0 ? <p style={{ fontSize: '14px', color: 'var(--text-muted)', background: 'var(--bg-card)', padding: '32px', borderRadius: '12px', textAlign: 'center' }}>Your timeline is pristine. Records appear when a verified doctor adds them.</p> : (
               <div style={{ paddingTop: '16px' }}>
                 {records.map((r, i) => (
                   <motion.div key={r.id} style={timelineItem} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 * i }}>
                     <div style={timelineDot} />
                     <div style={{ fontSize: '13px', color: 'var(--primary)', marginBottom: '6px', fontWeight: 600, letterSpacing: '1px' }}>{new Date(r.record_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
-                    <div onClick={() => setSelectedRecord(r)} style={{ background: 'rgba(0,0,0,0.2)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '16px', padding: '20px', transition: 'all 0.3s ease', cursor: 'pointer' }} onMouseEnter={e => {e.currentTarget.style.borderColor='rgba(0,229,255,0.4)'; e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.background='rgba(0,229,255,0.05)';}} onMouseLeave={e => {e.currentTarget.style.borderColor='rgba(255,255,255,0.05)'; e.currentTarget.style.transform='translateY(0)'; e.currentTarget.style.background='rgba(0,0,0,0.2)';}}>
+                    <div onClick={() => setSelectedRecord(r)} style={{ background: 'var(--bg-card)', border: '1px solid var(--border-light)', borderRadius: '16px', padding: '20px', transition: 'all 0.3s ease', cursor: 'pointer' }} onMouseEnter={e => {e.currentTarget.style.borderColor='var(--border-focus)'; e.currentTarget.style.transform='translateY(-2px)';}} onMouseLeave={e => {e.currentTarget.style.borderColor='var(--border-light)'; e.currentTarget.style.transform='translateY(0)';}}>
                       <div style={{ fontWeight: 700, fontSize: '18px', marginBottom: '8px', color: 'var(--text-heading)' }}>{r.diagnosis}</div>
                       {r.prescription && <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '4px' }}><span style={{marginRight:'8px'}}>💊</span>{r.prescription}</div>}
                       {r.notes && <div style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: '12px' }}><span style={{marginRight:'8px'}}>📝</span>{r.notes}</div>}
@@ -147,7 +147,7 @@ export const PatientDashboard = () => {
           <Input label="Name" value={memberName} onChange={e => setMemberName(e.target.value)} />
           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <label style={{ fontSize: '13px', fontWeight: 500, color: 'var(--text-muted)', textTransform: 'uppercase' }}>Relation</label>
-            <select value={memberRelation} onChange={e => setMemberRelation(e.target.value)} style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid var(--border-light)', color: 'var(--text-main)', borderRadius: '10px', padding: '12px 16px', fontSize: '15px' }}>
+            <select value={memberRelation} onChange={e => setMemberRelation(e.target.value)} style={{ background: 'var(--bg-card)', border: '1px solid var(--border-light)', color: 'var(--text-main)', borderRadius: '10px', padding: '12px 16px', fontSize: '15px' }}>
               <option value="child">Child</option><option value="parent">Parent</option><option value="spouse">Spouse</option><option value="sibling">Sibling</option><option value="other">Other</option>
             </select>
           </div>
@@ -170,28 +170,28 @@ export const PatientDashboard = () => {
       <Modal isOpen={!!selectedRecord} onClose={() => setSelectedRecord(null)} title="Medical Record Detail">
         {selectedRecord && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
               <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>Diagnosis</div>
               <div style={{ fontSize: '18px', fontWeight: 700, color: 'var(--text-heading)' }}>{selectedRecord.diagnosis}</div>
             </div>
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ background: 'var(--bg-card)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
                 <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>Date</div>
                 <div style={{ fontSize: '15px', color: 'var(--text-main)' }}>{new Date(selectedRecord.record_date).toLocaleDateString()}</div>
               </div>
-              <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ background: 'var(--bg-card)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
                 <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>Attending Doctor</div>
                 <div style={{ fontSize: '15px', color: 'var(--text-main)' }}>Dr. {selectedRecord.doctor_details?.user_details?.name}</div>
               </div>
             </div>
 
-            <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
               <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Prescription & Treatment</div>
               <div style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6 }}>{selectedRecord.prescription || 'No prescription specified.'}</div>
             </div>
 
-            <div style={{ background: 'rgba(0,0,0,0.2)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div style={{ background: 'var(--bg-card)', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-light)' }}>
               <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>Clinical Notes</div>
               <div style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.6 }}>{selectedRecord.notes || 'No additional notes.'}</div>
             </div>
@@ -243,7 +243,7 @@ export const PatientDashboard = () => {
                 </html>
               `);
               printWindow.document.close();
-            }} style={{ background: 'rgba(0,229,255,0.1)', color: 'var(--primary)', border: '1px solid rgba(0,229,255,0.3)', marginTop: '8px' }}>
+            }} style={{ background: 'color-mix(in srgb, var(--primary) 10%, transparent)', color: 'var(--primary)', border: '1px solid color-mix(in srgb, var(--primary) 30%, transparent)', marginTop: '8px' }}>
               📥 Download PDF
             </Button>
           </div>

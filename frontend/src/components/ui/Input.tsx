@@ -25,7 +25,7 @@ const labelStyle: CSSProperties = {
 };
 
 const inputStyle: CSSProperties = {
-  background: 'rgba(0, 0, 0, 0.3)',
+  background: 'var(--bg-card)',
   border: '1px solid var(--border-light)',
   color: 'var(--text-main)',
   borderRadius: '10px',

@@ -60,19 +60,18 @@ const errorBoxStyle: CSSProperties = {
 const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 'verified'; verifiedRole?: string }) => {
   const isVerified = status === 'verified';
   const isScanning = status === 'scanning';
-  const accentColor = isVerified ? '#10b981' : '#00e5ff';
-  const glowColor = isVerified ? 'rgba(16,185,129,' : 'rgba(0,229,255,';
+  const accentColor = isVerified ? 'var(--success)' : 'var(--primary)';
 
   return (
     <div style={{ position: 'relative', width: '280px', aspectRatio: '1', perspective: '800px' }}>
       {/* Pulsing concentric rings */}
       {[0, 0.8, 1.6].map((delay, i) => (
         <motion.div key={i}
-          animate={{ scale: [0.88, 1.08, 0.88], opacity: [0.06, 0.18, 0.06] }}
+          animate={{ scale: [0.88, 1.08, 0.88], opacity: [0.15, 0.4, 0.15] }}
           transition={{ duration: 3, delay, repeat: Infinity, ease: 'easeInOut' }}
           style={{
             position: 'absolute', inset: `${-8 - i * 12}px`, borderRadius: '24px',
-            border: `1px solid ${glowColor}0.15)`, pointerEvents: 'none'
+            border: `2px solid color-mix(in srgb, ${accentColor} 25%, transparent)`, pointerEvents: 'none'
           }} />
       ))}
 
@@ -88,16 +87,16 @@ const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 
         }
         style={{
           position: 'relative', width: '100%', height: '100%', borderRadius: '20px',
-          background: 'linear-gradient(145deg, rgba(10,16,30,0.9), rgba(5,10,20,0.95))',
-          backdropFilter: 'blur(24px)',
-          border: `1px solid ${glowColor}0.15)`,
+          background: 'var(--bg-card)',
+          backdropFilter: 'var(--blur-glass)',
+          border: `2px solid color-mix(in srgb, ${accentColor} 25%, transparent)`,
           padding: '28px',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           boxShadow: isVerified
-            ? `0 25px 80px -20px rgba(0,0,0,0.7), 0 0 80px -10px ${glowColor}0.2)`
-            : `0 25px 80px -20px rgba(0,0,0,0.7), 0 0 60px -10px ${glowColor}0.1)`,
+            ? `0 25px 80px -20px var(--shadow-glass), 0 0 80px -10px color-mix(in srgb, ${accentColor} 25%, transparent)`
+            : `0 25px 80px -20px var(--shadow-glass), 0 0 80px -10px color-mix(in srgb, ${accentColor} 15%, transparent)`,
           overflow: 'hidden', transformStyle: 'preserve-3d',
-          transition: 'border-color 0.5s ease, box-shadow 0.5s ease',
+          transition: 'border-color 0.5s ease, box-shadow 0.5s ease, background 0.5s ease',
         }}
       >
         {/* Holographic shimmer */}
@@ -106,9 +105,7 @@ const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', repeatDelay: 2 }}
           style={{
             position: 'absolute', inset: 0,
-            background: isVerified
-              ? 'linear-gradient(105deg, transparent 30%, rgba(16,185,129,0.05) 45%, rgba(16,185,129,0.03) 55%, transparent 70%)'
-              : 'linear-gradient(105deg, transparent 30%, rgba(0,229,255,0.04) 45%, rgba(124,58,237,0.03) 50%, rgba(0,229,255,0.04) 55%, transparent 70%)',
+            background: `linear-gradient(105deg, transparent 30%, color-mix(in srgb, ${accentColor} 4%, transparent) 45%, color-mix(in srgb, ${accentColor} 3%, transparent) 50%, color-mix(in srgb, ${accentColor} 4%, transparent) 55%, transparent 70%)`,
             zIndex: 1, pointerEvents: 'none'
           }} />
 
@@ -131,7 +128,7 @@ const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 
                 position: 'absolute', width: '26px', height: '26px', borderRadius: '4px',
                 top: c.t, left: c.l, right: c.r, bottom: c.b,
                 borderTop: c.bT, borderLeft: c.bL, borderRight: c.bR, borderBottom: c.bB,
-                filter: `drop-shadow(0 0 6px ${glowColor}0.4))`,
+                filter: `drop-shadow(0 0 6px color-mix(in srgb, ${accentColor} 40%, transparent))`,
                 transition: 'border-color 0.5s ease, filter 0.5s ease',
               } as CSSProperties} />
           ))}
@@ -148,13 +145,13 @@ const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 
                 style={{
                   position: 'absolute', left: '6%', right: '6%', height: '2px',
                   background: `linear-gradient(90deg, transparent 0%, ${accentColor} 20%, ${accentColor} 80%, transparent 100%)`,
-                  boxShadow: `0 0 20px 6px ${glowColor}0.4), 0 0 60px 10px ${glowColor}0.15)`,
+                  boxShadow: `0 0 20px 6px color-mix(in srgb, ${accentColor} 40%, transparent), 0 0 60px 10px color-mix(in srgb, ${accentColor} 15%, transparent)`,
                   zIndex: 3
                 }}
               >
                 <div style={{
                   position: 'absolute', top: '2px', left: 0, right: 0, height: '25px',
-                  background: `linear-gradient(180deg, ${glowColor}0.12), transparent)`,
+                  background: `linear-gradient(180deg, color-mix(in srgb, ${accentColor} 12%, transparent), transparent)`,
                   pointerEvents: 'none'
                 }} />
               </motion.div>
@@ -179,10 +176,10 @@ const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 
                   transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                   style={{
                     width: '60px', height: '60px', borderRadius: '50%',
-                    background: 'rgba(16,185,129,0.15)',
-                    border: '2px solid #10b981',
+                    background: 'color-mix(in srgb, var(--success) 15%, transparent)',
+                    border: '2px solid var(--success)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    boxShadow: '0 0 30px rgba(16,185,129,0.3)',
+                    boxShadow: '0 0 30px color-mix(in srgb, var(--success) 30%, transparent)',
                     fontSize: '28px'
                   }}
                 >
@@ -212,10 +209,10 @@ const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 
                   style={{
                     borderRadius: isCorner ? '3px' : '2px',
                     background: isVerified
-                      ? (isCyan ? '#10b981' : 'rgba(16,185,129,0.15)')
-                      : (isCyan ? '#00e5ff' : 'rgba(255,255,255,0.08)'),
+                      ? (isCyan ? 'var(--success)' : 'color-mix(in srgb, var(--success) 15%, transparent)')
+                      : (isCyan ? 'var(--primary)' : 'var(--border-light)'),
                     boxShadow: isCorner
-                      ? (isVerified ? '0 0 6px rgba(16,185,129,0.4)' : '0 0 6px rgba(0,229,255,0.3)')
+                      ? `0 0 6px color-mix(in srgb, ${accentColor} 40%, transparent)`
                       : 'none',
                     transition: 'background 0.6s ease, box-shadow 0.6s ease',
                   }} />
@@ -231,10 +228,10 @@ const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 
             transition={{ duration: 1.5, repeat: isVerified ? 0 : Infinity }}
             style={{
               width: '6px', height: '6px', borderRadius: '50%',
-              background: isVerified ? '#10b981' : (isScanning ? '#f59e0b' : '#00e5ff'),
+              background: isVerified ? 'var(--success)' : (isScanning ? 'var(--warning)' : 'var(--primary)'),
               boxShadow: isVerified
-                ? '0 0 8px rgba(16,185,129,0.6)'
-                : isScanning ? '0 0 8px rgba(245,158,11,0.5)' : '0 0 8px rgba(0,229,255,0.5)',
+                ? '0 0 8px color-mix(in srgb, var(--success) 60%, transparent)'
+                : isScanning ? '0 0 8px color-mix(in srgb, var(--warning) 50%, transparent)' : '0 0 8px color-mix(in srgb, var(--primary) 50%, transparent)',
               transition: 'background 0.4s ease, box-shadow 0.4s ease',
             }} />
           <AnimatePresence mode="wait">
@@ -246,13 +243,13 @@ const LoginScanner = ({ status, verifiedRole }: { status: 'idle' | 'scanning' | 
               transition={{ duration: 0.3 }}
               style={{
                 fontSize: '11px',
-                color: isVerified ? '#10b981' : 'var(--text-muted)',
+                color: isVerified ? 'var(--success)' : 'var(--text-muted)',
                 letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600,
                 transition: 'color 0.4s ease',
               }}
             >
               {isVerified
-                ? (verifiedRole === 'doctor' ? '✓ Doctor Verified' : verifiedRole === 'admin' ? '✓ Admin Verified' : '✓ User Verified')
+                ? (verifiedRole === 'doctor' ? '✓ Doctor Verified' : verifiedRole === 'admin' ? '✓ Admin Verified' : verifiedRole === 'lab' ? '✓ Lab Verified' : '✓ User Verified')
                 : isScanning ? 'Authenticating...' : 'Awaiting Login'}
             </motion.div>
           </AnimatePresence>
@@ -291,6 +288,7 @@ export const Login = () => {
         if (data.user.role === 'patient') navigate('/dashboard');
         else if (data.user.role === 'doctor') navigate('/doctor');
         else if (data.user.role === 'admin') navigate('/admin');
+        else if (data.user.role === 'lab') navigate('/lab');
       }, 2000);
     } catch (err: unknown) {
       const axiosError = err as { response?: { data?: { detail?: string } } };

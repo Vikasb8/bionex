@@ -8,7 +8,7 @@ import type { ReactNode } from 'react';
 
 interface ProtectedRouteProps {
   children: ReactNode;
-  requiredRole?: 'patient' | 'doctor' | 'admin';
+  requiredRole?: 'patient' | 'doctor' | 'admin' | 'lab';
 }
 
 export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
@@ -23,6 +23,7 @@ export const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) 
     if (user?.role === 'patient') return <Navigate to="/dashboard" replace />;
     if (user?.role === 'doctor') return <Navigate to="/doctor" replace />;
     if (user?.role === 'admin') return <Navigate to="/admin" replace />;
+    if (user?.role === 'lab') return <Navigate to="/lab" replace />;
     return <Navigate to="/" replace />;
   }
 

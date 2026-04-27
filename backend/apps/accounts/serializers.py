@@ -28,8 +28,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ['email', 'name', 'role', 'password', 'password_confirm', 'phone', 'date_of_birth']
 
     def validate_role(self, value):
-        if value not in ['patient', 'doctor']:
-            raise serializers.ValidationError("Role must be 'patient' or 'doctor'.")
+        if value not in ['patient', 'doctor', 'lab']:
+            raise serializers.ValidationError("Role must be 'patient', 'doctor', or 'lab'.")
         return value
 
     def validate(self, attrs):

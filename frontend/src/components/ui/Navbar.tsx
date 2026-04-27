@@ -2,9 +2,12 @@
  * Top floating navigation bar with auth state awareness.
  * Premium glassmorphic pill navbar with enlarged logo, no text branding.
  */
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useAuthStore } from '../../store/authStore';
+import { useThemeStore } from '../../store/themeStore';
+import { Sun, Moon } from 'lucide-react';
 import api from '../../api/client';
 import type { CSSProperties } from 'react';
 // @ts-expect-error - image handled by vite
@@ -42,7 +45,7 @@ const logoStyle: CSSProperties = {
   alignItems: 'center',
   textDecoration: 'none',
   position: 'relative',
-  width: '140px', 
+  width: '180px', 
   height: '32px', 
 };
 
@@ -50,8 +53,8 @@ const logoImgStyle: CSSProperties = {
   position: 'absolute',
   left: 0,
   top: '50%',
-  marginTop: '-40px', 
-  height: '80px',
+  marginTop: '-55px', 
+  height: '110px',
   width: 'auto',
   filter: 'drop-shadow(0 0 16px rgba(0, 229, 255, 0.6))',
   transition: 'all 0.3s ease',
@@ -78,25 +81,25 @@ const linkStyle: CSSProperties = {
 const activeLinkStyle: CSSProperties = {
   ...linkStyle,
   color: 'var(--text-heading)',
-  background: 'rgba(0, 229, 255, 0.08)',
-  boxShadow: 'inset 0 0 0 1px rgba(0, 229, 255, 0.12)',
+  background: 'var(--nav-active-bg)',
+  boxShadow: 'var(--nav-active-border)',
 };
 
 const ctaButtonStyle: CSSProperties = {
   ...linkStyle,
-  background: 'linear-gradient(135deg, #00e5ff 0%, #0088cc 100%)',
-  color: '#050a12',
+  background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
+  color: 'var(--bg-main)',
   fontWeight: 700,
   fontSize: '13px',
   letterSpacing: '0.02em',
   padding: '9px 22px',
-  boxShadow: '0 4px 16px -4px rgba(0, 229, 255, 0.4)',
+  boxShadow: '0 4px 16px -4px color-mix(in srgb, var(--primary) 40%, transparent)',
 };
 
 const logoutBtnStyle: CSSProperties = {
-  background: 'rgba(239, 68, 68, 0.08)',
-  color: '#ef4444',
-  border: '1px solid rgba(239, 68, 68, 0.15)',
+  background: 'transparent',
+  color: 'var(--danger)',
+  border: '1px solid var(--danger)',
   padding: '8px 20px',
   borderRadius: '24px',
   cursor: 'pointer',
@@ -109,28 +112,21 @@ const logoutBtnStyle: CSSProperties = {
 
 export const Navbar = () => {
   const { isAuthenticated, user, logout, refreshToken } = useAuthStore();
+  const { theme, toggleTheme } = useThemeStore();
   const navigate = useNavigate();
   const location = useLocation();
   const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    return scrollY.on('change', (latest) => {
+      setIsScrolled(latest > 80);
+    });
+  }, [scrollY]);
 
   // Shrink the navbar slightly when scrolling down
   const width = useTransform(scrollY, [0, 100], ['100%', '92%']);
   const padding = useTransform(scrollY, [0, 100], ['20px 16px', '12px 16px']);
-  const navBg = useTransform(
-    scrollY,
-    [0, 80],
-    ['rgba(8, 14, 28, 0)', 'rgba(8, 14, 28, 0.92)']
-  );
-  const navBorder = useTransform(
-    scrollY,
-    [0, 80],
-    ['1px solid rgba(255, 255, 255, 0)', '1px solid rgba(255, 255, 255, 0.06)']
-  );
-  const navShadow = useTransform(
-    scrollY,
-    [0, 80],
-    ['none', '0 8px 32px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.04)']
-  );
 
   const handleLogout = async () => {
     try {
@@ -147,8 +143,8 @@ export const Navbar = () => {
   return (
     <motion.div style={{ ...navContainerStyle, padding }}>
       <motion.nav
-        className="nav-content"
-        style={{ ...navContentStyle, width, background: navBg, border: navBorder, boxShadow: navShadow }}
+        className={`nav-content ${isScrolled ? 'scrolled' : ''}`}
+        style={{ ...navContentStyle, width }}
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
@@ -166,6 +162,20 @@ export const Navbar = () => {
         </Link>
 
         <div className="nav-links-desktop" style={navLinksStyle}>
+          <button
+            onClick={toggleTheme}
+            style={{
+              background: 'transparent', border: 'none', color: 'var(--text-muted)',
+              cursor: 'pointer', padding: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              borderRadius: '50%', transition: 'all 0.2s', marginRight: '8px'
+            }}
+            onMouseEnter={e => Object.assign(e.currentTarget.style, { background: 'var(--nav-active-bg)', color: 'var(--primary)' })}
+            onMouseLeave={e => Object.assign(e.currentTarget.style, { background: 'transparent', color: 'var(--text-muted)' })}
+            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+          </button>
+          
           {!isAuthenticated ? (
             <>
               <Link to="/login" style={isActive('/login') ? activeLinkStyle : linkStyle}>
@@ -192,7 +202,12 @@ export const Navbar = () => {
                   Admin Control
                 </Link>
               )}
-              <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.08)', margin: '0 8px' }} />
+              {user?.role === 'lab' && (
+                <Link to="/lab" style={isActive('/lab') ? activeLinkStyle : linkStyle}>
+                  Lab Portal
+                </Link>
+              )}
+              <div style={{ width: '1px', height: '20px', background: 'var(--border-light)', margin: '0 8px' }} />
               <span style={{ fontSize: '13px', color: 'var(--text-muted)', fontWeight: 500 }}>
                 {user?.name}
               </span>

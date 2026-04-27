@@ -34,19 +34,19 @@ const baseStyle: CSSProperties = {
 
 const variants: Record<string, CSSProperties> = {
   primary: {
-    background: 'linear-gradient(135deg, #00e5ff 0%, #0088cc 100%)',
-    color: '#050a12',
-    boxShadow: '0 4px 20px -4px rgba(0, 229, 255, 0.35)',
+    background: 'linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%)',
+    color: 'var(--bg-main)',
+    boxShadow: '0 4px 20px -4px color-mix(in srgb, var(--primary) 35%, transparent)',
   },
   secondary: {
-    background: 'rgba(255, 255, 255, 0.04)',
+    background: 'color-mix(in srgb, var(--border-light) 50%, transparent)',
     color: 'var(--text-main)',
-    border: '1px solid rgba(255,255,255,0.08)',
+    border: '1px solid var(--border-light)',
   },
   danger: {
-    background: 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)',
+    background: 'linear-gradient(135deg, var(--danger) 0%, color-mix(in srgb, var(--danger) 80%, black) 100%)',
     color: '#fff',
-    boxShadow: '0 4px 20px -4px rgba(239, 68, 68, 0.35)',
+    boxShadow: '0 4px 20px -4px color-mix(in srgb, var(--danger) 35%, transparent)',
   },
   ghost: {
     background: 'transparent',

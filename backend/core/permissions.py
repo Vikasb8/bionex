@@ -37,6 +37,26 @@ class IsDoctorOrAdmin(BasePermission):
         return False
 
 
+class IsLab(BasePermission):
+    """Allow access only to authenticated AND verified lab technicians."""
+    def has_permission(self, request, view):
+        if not (request.user.is_authenticated and request.user.role == 'lab'):
+            return False
+        return hasattr(request.user, 'lab_profile') and request.user.lab_profile.is_verified
+
+
+class IsLabOrDoctor(BasePermission):
+    """Allow access to verified lab technicians or verified doctors."""
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False
+        if request.user.role == 'doctor':
+            return hasattr(request.user, 'doctor_profile') and request.user.doctor_profile.is_verified
+        if request.user.role == 'lab':
+            return hasattr(request.user, 'lab_profile') and request.user.lab_profile.is_verified
+        return False
+
+
 class IsOwnerOrDoctorOrAdmin(BasePermission):
     """Allow patient to access own data, or doctors/admins to access any."""
     def has_object_permission(self, request, view, obj):

@@ -31,7 +31,7 @@ const formStyle: CSSProperties = {
 
 const rolePickerStyle: CSSProperties = {
   display: 'grid',
-  gridTemplateColumns: '1fr 1fr',
+  gridTemplateColumns: '1fr 1fr 1fr',
   gap: '12px',
 };
 
@@ -39,7 +39,7 @@ const roleBtnBase: CSSProperties = {
   padding: '16px',
   borderRadius: '12px',
   border: '2px solid var(--border-light)',
-  background: 'rgba(0,0,0,0.2)',
+  background: 'var(--bg-card)',
   cursor: 'pointer',
   textAlign: 'center',
   transition: 'all 0.2s ease',
@@ -49,7 +49,7 @@ const roleBtnBase: CSSProperties = {
 const roleBtnActive: CSSProperties = {
   ...roleBtnBase,
   borderColor: 'var(--primary)',
-  background: 'rgba(0, 229, 255, 0.08)',
+  background: 'color-mix(in srgb, var(--primary) 8%, transparent)',
 };
 
 const errorBoxStyle: CSSProperties = {
@@ -66,7 +66,7 @@ export const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [role, setRole] = useState<'patient' | 'doctor'>('patient');
+  const [role, setRole] = useState<'patient' | 'doctor' | 'lab'>('patient');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { setAuth } = useAuthStore();
@@ -94,6 +94,7 @@ export const Register = () => {
       setAuth(data.user, data.tokens.access, data.tokens.refresh);
 
       if (role === 'patient') navigate('/dashboard');
+      else if (role === 'lab') navigate('/lab');
       else navigate('/doctor');
     } catch (err: unknown) {
       const axiosError = err as { response?: { data?: Record<string, string[]> } };
@@ -149,6 +150,15 @@ export const Register = () => {
                   >
                     <div style={{ fontSize: '24px', marginBottom: '4px' }}>👨‍⚕️</div>
                     <div style={{ fontSize: '14px', fontWeight: 600, color: role === 'doctor' ? 'var(--primary)' : 'var(--text-main)' }}>Doctor</div>
+                  </motion.div>
+                  <motion.div
+                    style={role === 'lab' ? roleBtnActive : roleBtnBase}
+                    onClick={() => setRole('lab')}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div style={{ fontSize: '24px', marginBottom: '4px' }}>🔬</div>
+                    <div style={{ fontSize: '14px', fontWeight: 600, color: role === 'lab' ? 'var(--primary)' : 'var(--text-main)' }}>Lab Tech</div>
                   </motion.div>
                 </div>
               </div>

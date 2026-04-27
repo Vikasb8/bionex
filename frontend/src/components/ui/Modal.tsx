@@ -24,11 +24,11 @@ const overlayStyle: CSSProperties = {
 };
 
 const modalStyle: CSSProperties = {
-  background: 'rgba(12, 19, 34, 0.95)',
+  background: 'var(--bg-card)',
   backdropFilter: 'blur(24px) saturate(150%)',
-  border: '1px solid rgba(255, 255, 255, 0.08)',
+  border: '1px solid var(--border-light)',
   borderRadius: '24px',
-  boxShadow: '0 25px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.04)',
+  boxShadow: 'var(--shadow-glass)',
   padding: '32px',
   maxWidth: '500px',
   width: '100%',
@@ -51,8 +51,8 @@ const titleStyle: CSSProperties = {
 };
 
 const closeBtnStyle: CSSProperties = {
-  background: 'rgba(255,255,255,0.05)',
-  border: '1px solid rgba(255,255,255,0.06)',
+  background: 'var(--bg-card)',
+  border: '1px solid var(--border-light)',
   color: 'var(--text-muted)',
   width: '34px',
   height: '34px',

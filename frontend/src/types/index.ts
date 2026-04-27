@@ -6,7 +6,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  role: 'patient' | 'doctor' | 'admin';
+  role: 'patient' | 'doctor' | 'admin' | 'lab';
   unique_health_id: string | null;
   qr_code_url: string | null;
   qr_code_full_url: string | null;
@@ -114,3 +114,43 @@ export interface AccessLog {
   metadata: Record<string, unknown> | null;
   timestamp: string;
 }
+
+export interface LabProfile {
+  id: string;
+  user: string;
+  user_details?: User;
+  lab_name: string;
+  department: string;
+  license_number: string;
+  is_verified: boolean;
+  verified_at: string | null;
+  created_at: string;
+}
+
+export interface LabTest {
+  id: string;
+  patient_id: string;
+  patient_name?: string;
+  patient_type: 'user' | 'family';
+  doctor: string | null;
+  doctor_details?: DoctorProfile;
+  lab_technician: string | null;
+  lab_technician_details?: LabProfile;
+  test_name: string;
+  test_description: string;
+  result: string | null;
+  result_file_key: string | null;
+  result_file_url: string | null;
+  status: 'pending' | 'completed' | 'verified' | 'rejected';
+  doctor_remarks: string | null;
+  prescribed_at: string;
+  completed_at: string | null;
+  verified_at: string | null;
+}
+
+export interface LabSearchResponse {
+  patient: User;
+  doctor: DoctorProfile;
+  tests: LabTest[];
+}
+

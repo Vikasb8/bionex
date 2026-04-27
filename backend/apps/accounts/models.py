@@ -58,4 +58,5 @@ class User(AbstractBaseUser, PermissionsMixin):
             letters = ''.join(random.choices(string.ascii_uppercase, k=4))
             hid = f"MID-{digits}-{letters}"
             if not User.objects.filter(unique_health_id=hid).exists():
-                return hid
+                return hid 
+                
